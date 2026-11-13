@@ -1,253 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zodiac Addict</title>
-    <style>
-        :root {
-            --bg-color: #0b0b0e;
-            --card-bg: #16161d;
-            --primary: #ff2a75;
-            --secondary: #00ffcc;
-            --warning: #ffcc00;
-            --danger: #ff3333;
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            background-image: radial-gradient(circle at top, rgba(255, 42, 117, 0.15) 0%, transparent 50%);
-        }
-        .container {
-            background-color: var(--card-bg);
-            width: 100%;
-            max-width: 520px;
-            padding: 40px 30px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
-            text-align: center;
-        }
-        h1 {
-            font-size: 26px;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-        p.subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; font-style: italic; }
-        .input-group { text-align: left; margin-bottom: 20px; }
-        label { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
-        select {
-            width: 100%; padding: 14px; background-color: rgba(255,255,255,0.05); color: white;
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; font-size: 16px; outline: none; cursor: pointer; transition: border 0.3s; appearance: none;
-        }
-        select:focus { border-color: var(--primary); }
-        select option { background-color: var(--card-bg); color: white; }
-        button {
-            width: 100%; padding: 16px; background: linear-gradient(90deg, var(--primary), #ff5599); color: white;
-            border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px;
-            transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 10px 20px rgba(255, 42, 117, 0.3);
-        }
-        button:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(255, 42, 117, 0.4); }
-        #result-box { display: none; margin-top: 30px; background: rgba(0,0,0,0.4); border-radius: 16px; padding: 20px; border-left: 4px solid var(--secondary); text-align: left; animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .result-label { font-size: 12px; color: var(--secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 5px; margin-top: 20px; }
-        .result-label:first-child { margin-top: 0; }
-        .result-content { font-size: 15px; line-height: 1.5; margin-bottom: 10px; color: #e4e4e7; }
-        .stats-container { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; }
-        .stat { text-align: center; flex: 1; }
-        .stat-name { font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
-        .stat-value { font-size: 15px; font-weight: bold; }
-        .val-green { color: var(--secondary); }
-        .val-yellow { color: var(--warning); }
-        .val-red { color: var(--danger); }
-        #share-btn { background: rgba(255,255,255,0.1); color: white; box-shadow: none; margin-top: 15px; border: 1px solid rgba(255,255,255,0.2); }
-        #share-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(0); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zodiac Addict</title>
+<style>
+:root { --bg: #050505; --card: #121212; --text: #f5f5f5; --muted: #888888; --red: #e60000; --border: #333333; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+body { background: var(--bg); background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 70%); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+.container { background: var(--card); width: 100%; max-width: 500px; padding: 40px 30px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.8); text-align: center; }
+h1 { font-size: 28px; margin-bottom: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
+p.sub { color: var(--muted); font-size: 14px; margin-bottom: 30px; font-style: italic; }
+.grp { text-align: left; margin-bottom: 20px; }
+label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; font-weight: 700; }
+select { width: 100%; padding: 16px; background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--border); border-radius: 8px; font-size: 16px; outline: none; cursor: pointer; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 12px auto; }
+select:focus { border-color: var(--text); background-color: rgba(255,255,255,0.1); }
+select option { background: #121212; color: white; padding: 10px; }
+.mbti-help { font-size: 12px; color: var(--muted); margin-top: 8px; text-align: right; }
+.mbti-help a { color: var(--red); text-decoration: none; font-weight: bold; }
+.mbti-help a:hover { text-decoration: underline; }
+button { width: 100%; padding: 18px; background: var(--text); color: var(--bg); border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
+button:hover { background: var(--red); color: var(--text); }
+#res-box { display: none; margin-top: 30px; background: #000; border-radius: 8px; padding: 25px; border-top: 4px solid var(--text); text-align: left; }
+.r-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 5px; margin-top: 25px; }
+.r-label:first-child { margin-top: 0; }
+.r-content { font-size: 16px; line-height: 1.6; margin-bottom: 10px; color: var(--text); }
+.img-wrapper { width: 100%; aspect-ratio: 1 / 1; margin: 0 auto 15px auto; background: #000; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; display: none; position: relative; }
+.celeb-img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: none; }
+.loading-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; animation: pulse 1.5s infinite; text-align: center; width: 80%; }
+@keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+.stats { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+.stat { text-align: center; flex: 1; }
+.stat-n { font-size: 10px; color: var(--muted); text-transform: uppercase; margin-bottom: 5px; font-weight: 700; }
+.stat-v { font-size: 22px; font-weight: bold; color: var(--text); }
+#share { background: transparent; color: var(--text); border: 1px solid var(--border); margin-top: 20px; font-size: 14px; padding: 14px; border-radius: 8px; }
+#share:hover { background: var(--text); color: var(--bg); }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Zodiac Addict</h1>
-        <p class="subtitle">"It's a roast, not a reading."</p>
-        <div class="input-group">
-            <label for="zodiac">Your Zodiac Sign</label>
-            <select id="zodiac">
-                <option value="Aries">Aries ♈</option>
-                <option value="Taurus">Taurus ♉</option>
-                <option value="Gemini">Gemini ♊</option>
-                <option value="Cancer">Cancer ♋</option>
-                <option value="Leo">Leo ♌</option>
-                <option value="Virgo">Virgo ♍</option>
-                <option value="Libra">Libra ♎</option>
-                <option value="Scorpio">Scorpio ♏</option>
-                <option value="Sagittarius">Sagittarius ♐</option>
-                <option value="Capricorn">Capricorn ♑</option>
-                <option value="Aquarius">Aquarius ♒</option>
-                <option value="Pisces">Pisces ♓</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <label for="mbti">Your MBTI Type</label>
-            <select id="mbti">
-                <option value="INTJ">INTJ (The Architect)</option>
-                <option value="INTP">INTP (The Logician)</option>
-                <option value="ENTJ">ENTJ (The Commander)</option>
-                <option value="ENTP">ENTP (The Debater)</option>
-                <option value="INFJ">INFJ (The Advocate)</option>
-                <option value="INFP">INFP (The Mediator)</option>
-                <option value="ENFJ">ENFJ (The Protagonist)</option>
-                <option value="ENFP">ENFP (The Campaigner)</option>
-                <option value="ISTJ">ISTJ (The Logistician)</option>
-                <option value="ISFJ">ISFJ (The Defender)</option>
-                <option value="ESTJ">ESTJ (The Executive)</option>
-                <option value="ESFJ">ESFJ (The Consul)</option>
-                <option value="ISTP">ISTP (The Virtuoso)</option>
-                <option value="ISFP">ISFP (The Adventurer)</option>
-                <option value="ESTP">ESTP (The Entrepreneur)</option>
-                <option value="ESFP">ESFP (The Entertainer)</option>
-            </select>
-        </div>
-        <button onclick="calculateMatch()">Reveal My Roast</button>
-        <div id="result-box">
-            <div class="stats-container">
-                <div class="stat">
-                    <div class="stat-name">Prestige</div>
-                    <div class="stat-value" id="stat-prestige">0/10</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-name">Charisma</div>
-                    <div class="stat-value" id="stat-charisma">0/10</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-name">Drama</div>
-                    <div class="stat-value" id="stat-drama">0/10</div>
-                </div>
-            </div>
-            <div class="result-label">Your Celebrity Twin</div>
-            <div class="result-content" id="celeb-result">...</div>
-            <div class="result-label">Your Ultimate Match</div>
-            <div class="result-content" id="match-result">...</div>
-            <button id="share-btn" onclick="copyResult()">Copy Roast for TikTok/IG</button>
-        </div>
-    </div>
-    <script>
-// --- THE DATA ---
-        const celebrityTwins = [
-            { name: "Stephen Fry", desc: "The ultimate national treasure. You are incredibly articulate, highly intelligent, and everyone wants you at their dinner party." },
-            { name: "Dame Judi Dench", desc: "Absolute prestige. You command respect the second you walk into a room. You don't need to shout to be heard." },
-            { name: "Barry from EastEnders", desc: "You are carrying a lot of emotional baggage and you probably need a pint. You are a legend in your own local pub." },
-            { name: "Kanye West", desc: "A visionary, a genius, and an absolute PR disaster. You have zero filter and you will say what you want." },
-            { name: "Tom Cruise", desc: "Unmatched dedication and insane charisma, but everyone knows you have some very strong, very specific beliefs." },
-            { name: "Ozzy Osbourne", desc: "You are a rock legend who has survived things that should have destroyed you. You are chaotic but deeply lovable." },
-            { name: "Kris Jenner", desc: "The ultimate momager. You are a ruthless business person and you will protect your inner circle at all costs." },
-            { name: "Phil Mitchell (Soap Villain)", desc: "Grumpy, intimidating, and always involved in a scandal. You have a heart of gold buried under a lot of anger." },
-            { name: "Sir Ian McKellen", desc: "Theatre royalty. You are witty, dramatic, and you give the best advice. A true master of your craft." },
-            { name: "Katie Price", desc: "You are a tabloid staple. Impulsive, fiercely loyal, and you have lived about ten lives in one." },
-            { name: "Boris Johnson", desc: "You somehow fail upwards. Your life is a chaotic mess, but you always find a way to survive and keep talking." },
-            { name: "Victoria Beckham", desc: "High fashion, high standards. You don't smile much in public, but you are secretly hilarious and iconic." }
-        ];
+<div class="container">
+<h1>Zodiac Addict</h1>
+<p class="sub">"It's a roast, not a reading."</p>
+<div class="grp">
+<label for="zodiac">1. Pick Your Star Sign</label>
+<select id="zodiac">
+<option value="Aries">Aries ♈</option><option value="Taurus">Taurus ♉</option><option value="Gemini">Gemini ♊</option><option value="Cancer">Cancer ♋</option><option value="Leo">Leo ♌</option><option value="Virgo">Virgo ♍</option><option value="Libra">Libra ♎</option><option value="Scorpio">Scorpio ♏</option><option value="Sagittarius">Sagittarius ♐</option><option value="Capricorn">Capricorn ♑</option><option value="Aquarius">Aquarius ♒</option><option value="Pisces">Pisces ♓</option>
+</select>
+</div>
+<div class="grp">
+<label for="mbti">2. Pick Your Personality (MBTI)</label>
+<select id="mbti">
+<option value="INTJ">INTJ - The Visionary Architect</option>
+<option value="INTP">INTP - The Curious Logician</option>
+<option value="ENTJ">ENTJ - The Bold Commander</option>
+<option value="ENTP">ENTP - The Chaotic Debater</option>
+<option value="INFJ">INFJ - The Quiet Advocate</option>
+<option value="INFP">INFP - The Dreamy Mediator</option>
+<option value="ENFJ">ENFJ - The Dramatic Protagonist</option>
+<option value="ENFP">ENFP - The Chaotic Campaigner</option>
+<option value="ISTJ">ISTJ - The Strict Logistician</option>
+<option value="ISFJ">ISFJ - The Loyal Defender</option>
+<option value="ESTJ">ESTJ - The Bossy Executive</option>
+<option value="ESFJ">ESFJ - The Social Consul</option>
+<option value="ISTP">ISTP - The Silent Virtuoso</option>
+<option value="ISFP">ISFP - The Artistic Adventurer</option>
+<option value="ESTP">ESTP - The Reckless Entrepreneur</option>
+<option value="ESFP">ESFP - The Spotlight Entertainer</option>
+</select>
+<div class="mbti-help">Don't know your type? <a href="https://myers-briggs-personality-test.com/" target="_blank">Take a free test here</a></div>
+</div>
+<button onclick="calculateMatch()">Reveal My Roast</button>
+<div id="res-box">
+<div class="stats">
+<div class="stat"><div class="stat-n">Fame</div><div class="stat-v" id="s-fame">0/10</div></div>
+<div class="stat"><div class="stat-n">Chaos</div><div class="stat-v" id="s-chaos">0/10</div></div>
+<div class="stat"><div class="stat-n">Charisma</div><div class="stat-v" id="s-char">0/10</div></div>
+</div>
+<div class="r-label">Your Celebrity Twin</div>
+<div class="img-wrapper" id="img-wrap">
+    <div class="loading-text" id="img-load">Fetching Real Photo...</div>
+    <img id="c-img" class="celeb-img" src="" alt="">
+</div>
+<div class="r-content" id="c-res">...</div>
+<div class="r-label">Iconic Moment</div>
+<div class="r-content" id="c-iconic" style="font-style: italic; color: var(--muted); border-left: 2px solid var(--muted); padding-left: 10px;">...</div>
+<div class="r-label">They Actually Said:</div>
+<div class="r-content" id="c-quote" style="color: var(--text); font-weight: bold;">...</div>
+<div class="r-label">Your Biggest Red Flag</div>
+<div class="r-content" id="c-redflag" style="color: var(--red); font-weight: bold;">...</div>
+<button id="share" onclick="copyRes()">Copy Roast for TikTok/IG</button>
+</div>
+</div>
+<script>
+const mbtiVibes = {
+    "INTJ": "You are a calculated mastermind who secretly wants to rebel.", "INTP": "You are an overthinker who analyzes everything to death.", "ENTJ": "You are a ruthless boss who will step on anyone.", "ENTP": "You are a chaotic visionary who starts arguments for fun.", "INFJ": "You are an anxious advocate who feels everything too deeply.", "INFP": "You are a sensitive dreamer who lives in a fantasy world.", "ENFJ": "You are a dramatic protagonist who needs to save everyone.", "ENFP": "You are a chaotic golden retriever with zero impulse control.", "ISTJ": "You are a rigid rule-follower who judges everyone.", "ISFJ": "You are a people-pleaser who holds grudges silently.", "ESTJ": "You are a bossy control freak who loves a spreadsheet.", "ESFJ": "You are a gossipy social butterfly who needs validation.", "ISTP": "You are a silent lone wolf who takes risks.", "ISFP": "You are a creative adventurer who is secretly dramatic.", "ESTP": "You are a reckless adrenaline junkie who never thinks.", "ESFP": "You are a total spotlight hog who lives for the applause."
+};
 
-        const matchPool = [
-            { match: "A disgraced politician who wants you to be their campaign manager.", vibe: "You will do all the work, they will take the credit." },
-            { match: "A chaotic soap star who will start a fight at your family dinner.", vibe: "Expect a lot of dramatic exits and slammed doors." },
-            { match: "A highly respected actor who is secretly a complete diva.", vibe: "You will have to hold their coat while they yell at the director." },
-            { match: "A reality TV legend who is only with you for the camera time.", vibe: "Your relationship will be a PR stunt." },
-            { match: "A rock star who is emotionally unavailable but writes amazing songs about you.", vibe: "You will be their muse, but never their priority." }
-        ];
+const celebs = [
+{ name: "Dennis Rodman", search: "Dennis Rodman", zodiac: "Pisces", quote: "I'm not a role model.", desc: "The ultimate unhinged athlete.", iconic: "Wearing a wedding dress in 1996.", redflag: "You have zero boundaries." },
+{ name: "Pete Doherty", search: "Pete Doherty", zodiac: "Pisces", quote: "I'm a poet, not a rockstar.", desc: "The walking red flag of the 2000s.", iconic: "Leaving court looking disheveled.", redflag: "You are a walking disaster." },
+{ name: "Tommy Lee", search: "Tommy Lee", zodiac: "Libra", quote: "I'm a rock star.", desc: "The Mötley Crüe drummer.", iconic: "The drum kit on the plane.", redflag: "You have zero impulse control." },
+{ name: "Pete Burns", search: "Pete Burns", zodiac: "Leo", quote: "You spin me right round.", desc: "The ultimate plastic surgery icon.", iconic: "The extreme plastic surgery look.", redflag: "You are completely unhinged." },
+{ name: "Ozzy Osbourne", search: "Ozzy Osbourne", zodiac: "Sagittarius", quote: "I'm the Prince of Darkness.", desc: "The bat bite, the mumbling.", iconic: "Biting the head off a bat.", redflag: "You are a walking hazard." },
+{ name: "Bad Bunny", search: "Bad Bunny", zodiac: "Pisces", quote: "I do whatever I want.", desc: "Unapologetic, boundary-pushing.", iconic: "The pelvic thrusts that sparked complaints.", redflag: "You are completely unmanageable." },
+{ name: "Prince", search: "Prince (musician)", zodiac: "Gemini", quote: "I am something that you'll never understand.", desc: "A musical genius who wore heels.", iconic: "The Purple Rain era.", redflag: "You are intensely private but flamboyant." },
+{ name: "Mandy Dingle", search: "Lisa Riley", zodiac: "Leo", quote: "I'm a Dingle!", desc: "Loud, brash, and always wearing leopard print.", iconic: "The leopard print outfits.", redflag: "You will start a fight at a funeral." },
+{ name: "Rihanna", search: "Rihanna", zodiac: "Pisces", quote: "Work, work, work, work, work.", desc: "A billionaire makeup mogul.", iconic: "The stunning red carpet looks.", redflag: "You make us wait years for an album." },
+{ name: "Kurt Cobain", search: "Kurt Cobain", zodiac: "Pisces", quote: "I'd rather be dead than cool.", desc: "The reluctant voice of a generation.", iconic: "The sunglasses and unkempt hair.", redflag: "You hate the spotlight." },
+{ name: "Joe Exotic", search: "Joe Exotic", zodiac: "Pisces", quote: "I am the Tiger King.", desc: "Chaotic, flamboyant, unhinged.", iconic: "The mullet and the gun holster.", redflag: "Too many pets." },
+{ name: "Björk", search: "Björk", zodiac: "Scorpio", quote: "I'm not a pop star, I'm a musician.", desc: "An avant-garde Icelandic icon.", iconic: "The infamous swan dress.", redflag: "You are beautifully unhinged." },
+{ name: "Goldie", search: "Goldie (musician)", zodiac: "Virgo", quote: "I'm a survivor.", desc: "The godfather of drum and bass.", iconic: "The solid gold teeth.", redflag: "You will start a mosh pit in a library." },
+{ name: "Jennifer Lopez", search: "Jennifer Lopez", zodiac: "Leo", quote: "I'm still Jenny from the Block.", desc: "An absolute powerhouse.", iconic: "The plunging green Versace dress.", redflag: "Your love life is a revolving door." },
+{ name: "Britney Spears", search: "Britney Spears", zodiac: "Sagittarius", quote: "I just want to be happy.", desc: "A pop legend who just wants peace.", iconic: "Shaving her head and attacking a car.", redflag: "You attract controlling people." },
+{ name: "Pamela Anderson", search: "Pamela Anderson", zodiac: "Cancer", quote: "It's a rollercoaster ride.", desc: "An absolute icon with terrible taste in men.", iconic: "The red Baywatch swimsuit.", redflag: "You date rock stars and get hurt." },
+{ name: "Johnny Depp", search: "Johnny Depp", zodiac: "Gemini", quote: "I hate fame.", desc: "The eccentric pirate.", iconic: "The courtroom sketches.", redflag: "You write weird texts." },
+{ name: "Tom Cruise", search: "Tom Cruise", zodiac: "Cancer", quote: "I love what I do.", desc: "Unmatched dedication.", iconic: "Jumping on Oprah's couch.", redflag: "You have a savior complex." },
+{ name: "Kanye West", search: "Kanye West", zodiac: "Gemini", quote: "I am a god.", desc: "A visionary and a PR disaster.", iconic: "Wearing a giant Margiela mask.", redflag: "Zero filter." },
+{ name: "Elon Musk", search: "Elon Musk", zodiac: "Cancer", quote: "Who controls the memes, controls the Universe.", desc: "A billionaire troll.", iconic: "Smoking weed on Joe Rogan.", redflag: "You have a savior complex." },
+{ name: "Boris Johnson", search: "Boris Johnson", zodiac: "Gemini", quote: "My policy on cake is pro having it.", desc: "You somehow fail upwards.", iconic: "Stuck on a zip wire.", redflag: "You promise the world but deliver chaos." },
+{ name: "Gemma Collins", search: "Gemma Collins", zodiac: "Aquarius", quote: "I'm a diva, I'm a star, I'm iconic.", desc: "You don't walk into a room; you arrive.", iconic: "Falling through the trapdoor.", redflag: "Minor inconveniences are tragedies." },
+{ name: "Katie Price", search: "Katie Price", zodiac: "Gemini", quote: "I'm a strong woman.", desc: "A tabloid staple.", iconic: "The pink horsebox.", redflag: "Your love life is a revolving door." },
+{ name: "Donald Trump", search: "Donald Trump", zodiac: "Gemini", quote: "You're fired.", desc: "Incredibly loud.", iconic: "The tan suit scandal.", redflag: "You never admit you're wrong." },
+{ name: "Kim Kardashian", search: "Kim Kardashian", zodiac: "Libra", quote: "I hate the word 'famous'.", desc: "Flawless aesthetic.", iconic: "The ugly crying face.", redflag: "You monetize trauma." },
+{ name: "Charlie Sheen", search: "Charlie Sheen", zodiac: "Virgo", quote: "I'm bi-winning.", desc: "A walking public meltdown.", iconic: "The 'Tiger Blood' interviews.", redflag: "You have zero filter." },
+{ name: "Amy Winehouse", search: "Amy Winehouse", zodiac: "Virgo", quote: "I don't write songs about being happy.", desc: "A generational talent.", iconic: "The beehive and eyeliner.", redflag: "You self-destruct." },
+{ name: "Lindsay Lohan", search: "Lindsay Lohan", zodiac: "Cancer", quote: "I'm just trying to live my life.", desc: "A 2000s icon.", iconic: "The ankle monitor.", redflag: "You have zero impulse control." },
+{ name: "Angelina Jolie", search: "Angelina Jolie", zodiac: "Gemini", quote: "I'm just a mother.", desc: "A global humanitarian.", iconic: "The Mr. & Mrs. Smith press tour.", redflag: "You collect ex-husbands." },
+{ name: "Amber Heard", search: "Amber Heard", zodiac: "Taurus", quote: "I'm a survivor.", desc: "A chaotic actress.", iconic: "The courtroom memes.", redflag: "You leave 'presents' in the bed." },
+{ name: "Jada Pinkett Smith", search: "Jada Pinkett Smith", zodiac: "Virgo", quote: "It was an entanglement.", desc: "The queen of oversharing.", iconic: "Red Table Talk.", redflag: "You tell secrets on podcasts." },
+{ name: "Courtney Love", search: "Courtney Love", zodiac: "Cancer", quote: "I'm a rock star.", desc: "An unhinged rockstar.", iconic: "The baby doll dress.", redflag: "You are a walking disaster." },
+{ name: "Madonna", search: "Madonna", zodiac: "Leo", quote: "I'm tough, I'm ambitious.", desc: "The Queen of Pop.", iconic: "The cone bra.", redflag: "You need to prove you're relevant." },
+{ name: "David Bowie", search: "David Bowie", zodiac: "Capricorn", quote: "I'm an alien.", desc: "You reinvent yourself.", iconic: "The Aladdin Sane lightning bolt.", redflag: "You ghost people." },
+{ name: "Nigel Farage", search: "Nigel Farage", zodiac: "Taurus", quote: "I'm just a normal bloke.", desc: "Always holding a pint.", iconic: "Standing in a pub looking smug.", redflag: "You made a career out of being angry." },
+{ name: "Piers Morgan", search: "Piers Morgan", zodiac: "Aries", quote: "I'm a truth-teller.", desc: "You think you're the most important person.", iconic: "Storming off set.", redflag: "Controversy is your personality." },
+{ name: "Jeremy Clarkson", search: "Jeremy Clarkson", zodiac: "Aries", quote: "I'm a petrolhead.", desc: "A grumpy old man.", iconic: "Punching a producer.", redflag: "You argue with anyone." },
+{ name: "Katie Hopkins", search: "Katie Hopkins", zodiac: "Aquarius", quote: "I'm not sorry.", desc: "A career out of being offensive.", iconic: "Getting deported.", redflag: "You thrive on hate." },
+{ name: "Margaret Thatcher", search: "Margaret Thatcher", zodiac: "Libra", quote: "The lady's not for turning.", desc: "The Iron Lady.", iconic: "Holding her handbag.", redflag: "Zero empathy." },
+{ name: "Vladimir Putin", search: "Vladimir Putin", zodiac: "Libra", quote: "I am the president.", desc: "A shirtless autocrat.", iconic: "Riding a horse shirtless.", redflag: "You invade countries when bored." },
+{ name: "Kris Jenner", search: "Kris Jenner", zodiac: "Scorpio", quote: "You're doing amazing, sweetie.", desc: "The ultimate momager.", iconic: "Holding a phone.", redflag: "You manage everyone's lives." },
+{ name: "Paris Hilton", search: "Paris Hilton", zodiac: "Aquarius", quote: "That's hot.", desc: "You invented the influencer game.", iconic: "Juicy Couture and a Chihuahua.", redflag: "Deeply out of touch." },
+{ name: "Tyson Fury", search: "Tyson Fury", zodiac: "Leo", quote: "I'm the Gypsy King.", desc: "A giant loud man.", iconic: "Singing American Pie.", redflag: "Extreme highs and lows." },
+{ name: "Conor McGregor", search: "Conor McGregor", zodiac: "Cancer", quote: "I am the king.", desc: "Rich, angry.", iconic: "Throwing a dolly.", redflag: "You fight buses." },
+{ name: "Robert Downey Jr.", search: "Robert Downey Jr.", zodiac: "Aries", quote: "I know who I am.", desc: "The ultimate comeback king.", iconic: "Getting arrested in the 90s.", redflag: "You are your own worst enemy." },
+{ name: "Steven Tyler", search: "Steven Tyler", zodiac: "Aries", quote: "I don't want to miss a thing.", desc: "The mouth and the scarves.", iconic: "The massive microphone stand.", redflag: "You refuse to act your age." },
+{ name: "Iggy Pop", search: "Iggy Pop", zodiac: "Taurus", quote: "I am the godfather of punk.", desc: "Shirtless and bleeding.", iconic: "Stage diving.", redflag: "No regard for your body." },
+{ name: "Taylor Momsen", search: "Taylor Momsen", zodiac: "Leo", quote: "I don't give a f***.", desc: "From Cindy Lou Who to goth.", iconic: "The heavy black eyeliner.", redflag: "You are permanently angry." },
+{ name: "Machine Gun Kelly", search: "Machine Gun Kelly", zodiac: "Taurus", quote: "I'm a rockstar now.", desc: "Punk-pop chaos.", iconic: "Pink hair and a guitar.", redflag: "You are high on life." },
+{ name: "Joan Rivers", search: "Joan Rivers", zodiac: "Gemini", quote: "I wish I had a twin.", desc: "The ultimate Botox icon.", iconic: "The red carpet interviews.", redflag: "You insult anyone for a laugh." },
+{ name: "Donatella Versace", search: "Donatella Versace", zodiac: "Taurus", quote: "Fashion is about dreaming.", desc: "The blonde hair and tan.", iconic: "The Versace runway.", redflag: "Fiercely protective of your brand." },
+{ name: "Barry from EastEnders", search: "Shaun Williamson", zodiac: "Scorpio", quote: "I'm a loser.", desc: "Your life is a tragedy.", iconic: "Falling off a cliff.", redflag: "You are too trusting." },
+{ name: "Ross Kemp", search: "Ross Kemp", zodiac: "Leo", quote: "Let's have it!", desc: "The ultimate hard man.", iconic: "Squinting at the camera.", redflag: "You look like you'll headbutt someone." },
+{ name: "Nicki Minaj", search: "Nicki Minaj", zodiac: "Sagittarius", quote: "I'm the queen of rap.", desc: "Zero chill for haters.", iconic: "The colorful wigs.", redflag: "You feud with everyone." },
+{ name: "Stefflon Don", search: "Stefflon Don", zodiac: "Libra", quote: "I'm a boss.", desc: "UK rap royalty.", iconic: "The fierce pose.", redflag: "You take no nonsense." },
+{ name: "Megan Thee Stallion", search: "Megan Thee Stallion", zodiac: "Aquarius", quote: "I'm a hot girl.", desc: "The ultimate Hot Girl.", iconic: "The glamorous outfits.", redflag: "You destroy anyone who crosses you." },
+{ name: "Tommy Robinson", search: "Tommy Robinson", zodiac: "Sagittarius", quote: "I'm a patriot.", desc: "Constantly getting arrested.", iconic: "Yelling at a camera.", redflag: "You think you're a revolutionary." },
+{ name: "Prince Andrew", search: "Prince Andrew, Duke of York", zodiac: "Aquarius", quote: "I was at Pizza Express in Woking.", desc: "Famously sweaty.", iconic: "The sweating in the interview.", redflag: "You have terrible judgment." },
+{ name: "Adolf Hitler", search: "Adolf Hitler", zodiac: "Taurus", quote: "I am the leader.", desc: "Passionate about hobbies.", iconic: "Angry podium speeches.", redflag: "You are a vegetarian who yells." },
+{ name: "Saddam Hussein", search: "Saddam Hussein", zodiac: "Taurus", quote: "I am the president.", desc: "Paranoid.", iconic: "Hiding in a spider hole.", redflag: "You trust no one." },
+{ name: "Vlad the Impaler", search: "Vlad the Impaler", zodiac: "Sagittarius", quote: "I am the punishment of God.", desc: "Terrifying dinner parties.", iconic: "Dining among guests.", redflag: "Conflict resolution is disproportionate." },
+{ name: "Caligula", search: "Caligula", zodiac: "Virgo", quote: "I am a god.", desc: "Unhinged and lavish.", iconic: "Appointing a horse.", redflag: "Zero impulse control." },
+{ name: "Kim Jong Un", search: "Kim Jong Un", zodiac: "Capricorn", quote: "I am the supreme leader.", desc: "A dictator with a weird haircut.", iconic: "Clapping slowly.", redflag: "No one can disagree with you." }
+];
 
-        const zodiacMood = {
-            "Aries": "starting a fight in the middle of a wedding",
-            "Taurus": "eating snacks while watching the drama unfold",
-            "Gemini": "spreading rumors to the tabloids",
-            "Cancer": "crying in the green room",
-            "Leo": "demanding a bigger dressing room",
-            "Virgo": "editing the reality show to make yourself look better",
-            "Libra": "trying to be friends with everyone and failing",
-            "Scorpio": "plotting your revenge",
-            "Sagittarius": "getting kicked off the show for breaking the rules",
-            "Capricorn": "trying to monetize your trauma",
-            "Aquarius": "being the weird fan favorite",
-            "Pisces": "falling in love with the wrong person on set"
+async function fetchWikiImage(searchName) {
+    try {
+        let url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(searchName)}&prop=pageimages&format=json&pithumbsize=600&origin=*`;
+        let response = await fetch(url);
+        let data = await response.json();
+        let pages = data.query.pages;
+        let pageId = Object.keys(pages)[0];
+        
+        if (pages[pageId].thumbnail && pages[pageId].thumbnail.source) {
+            return pages[pageId].thumbnail.source;
+        }
+        return null;
+    } catch (error) {
+        return null;
+    }
+}
+
+async function calculateMatch() {
+    const mbti = document.getElementById('mbti').value;
+    let fame = Math.floor(Math.random() * 6) + 5;
+    let chaos = Math.floor(Math.random() * 8) + 3;
+    let charisma = Math.floor(Math.random() * 7) + 4;
+    let twin = celebs[Math.floor(Math.random() * celebs.length)];
+    
+    document.getElementById('s-fame').innerText = fame + "/10";
+    document.getElementById('s-chaos').innerText = chaos + "/10";
+    document.getElementById('s-char').innerText = charisma + "/10";
+    
+    let vibe = mbtiVibes[mbti];
+    document.getElementById('c-res').innerHTML = `<strong>${twin.name}</strong> <span style="color: var(--muted); font-size: 14px;">(${twin.zodiac})</span><br>${vibe} ${twin.desc}`;
+    document.getElementById('c-iconic').innerText = twin.iconic;
+    document.getElementById('c-quote').innerText = `"${twin.quote}"`;
+    document.getElementById('c-redflag').innerText = twin.redflag;
+    
+    const wrap = document.getElementById('img-wrap');
+    const img = document.getElementById('c-img');
+    const load = document.getElementById('img-load');
+    
+    wrap.style.display = "block";
+    load.style.display = "block";
+    load.innerText = "Fetching Real Photo...";
+    img.style.display = "none";
+    
+    // Use the specific search name to find the correct Wikipedia page
+    let imgUrl = await fetchWikiImage(twin.search);
+    
+    if (imgUrl) {
+        img.onload = function() {
+            load.style.display = "none";
+            img.style.display = "block";
         };
+        img.src = imgUrl;
+    } else {
+        load.innerText = "No Photo Found";
+    }
 
-        // --- THE LOGIC ---
-        function getRandom(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+    const shareText = `Zodiac Addict:\n🏆 Fame: ${fame}/10\n🔥 Chaos: ${chaos}/10\n✨ Charisma: ${charisma}/10\n\nMy celebrity twin is ${twin.name} (${twin.zodiac}).\n\n"${twin.quote}"\n\nRed flag: ${twin.redflag}`;
+    document.getElementById('share').setAttribute('data-copy', shareText);
+    document.getElementById('res-box').style.display = "block";
+}
 
-        function calculateMatch() {
-            const sign = document.getElementById('zodiac').value;
-            const mbti = document.getElementById('mbti').value;
-            
-            let prestige = getRandom(5, 10);
-            let charisma = getRandom(4, 10);
-            let drama = getRandom(3, 10);
-
-            if (mbti === "ESFP" || mbti === "ESTP") {
-                drama = 10;
-                charisma = Math.max(charisma, 8);
-            }
-            if (mbti === "ENTJ" || mbti === "ESTJ") {
-                prestige = Math.max(prestige, 8);
-            }
-            if (mbti === "INFP" || mbti === "INFJ") {
-                drama = Math.min(drama, 5);
-                prestige = Math.max(prestige, 7);
-            }
-
-            let twin = celebrityTwins[Math.floor(Math.random() * celebrityTwins.length)];
-            let match = matchPool[Math.floor(Math.random() * matchPool.length)];
-
-            const prestigeEl = document.getElementById('stat-prestige');
-            prestigeEl.innerText = prestige + "/10";
-            prestigeEl.className = "stat-value " + (prestige >= 8 ? "val-green" : prestige >= 5 ? "val-yellow" : "val-red");
-
-            const charismaEl = document.getElementById('stat-charisma');
-            charismaEl.innerText = charisma + "/10";
-            charismaEl.className = "stat-value " + (charisma >= 8 ? "val-green" : charisma >= 5 ? "val-yellow" : "val-red");
-
-            const dramaEl = document.getElementById('stat-drama');
-            dramaEl.innerText = drama + "/10";
-            dramaEl.className = "stat-value " + (drama >= 8 ? "val-red" : drama >= 5 ? "val-yellow" : "val-green");
-
-            const mood = zodiacMood[sign];
-            
-            document.getElementById('celeb-result').innerHTML = `<strong>${twin.name}</strong><br>${twin.desc}`;
-            document.getElementById('match-result').innerHTML = `<strong>${match.match}</strong><br>${match.vibe} You are a ${sign} ${mbti}, which means you are ${mood}.`;
-
-            const shareText = `Zodiac Addict (The Roast):\n🏆 Prestige: ${prestige}/10\n✨ Charisma: ${charisma}/10\n🎭 Drama: ${drama}/10\n\nMy celebrity twin is ${twin.name}! 😳\nApparently, I belong with: ${match.match}\n\nWhat's your vibe?`;
-            
-            document.getElementById('share-btn').setAttribute('data-copy', shareText);
-            document.getElementById('result-box').style.display = "block";
-        }
-
-        function copyResult() {
-            const textToCopy = document.getElementById('share-btn').getAttribute('data-copy');
-            
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const btn = document.getElementById('share-btn');
-                btn.innerText = "Copied! Go paste it on TikTok ✅";
-                btn.style.background = "var(--secondary)";
-                btn.style.color = "#000";
-                
-                setTimeout(() => {
-                    btn.innerText = "Copy Roast for TikTok/IG";
-                    btn.style.background = "rgba(255,255,255,0.1)";
-                    btn.style.color = "white";
-                }, 2500);
-            }).catch(err => {
-                alert("Failed to copy. Please screenshot instead!");
-            });
-        }
-    </script>
+function copyRes() {
+    navigator.clipboard.writeText(document.getElementById('share').getAttribute('data-copy')).then(() => {
+        const btn = document.getElementById('share');
+        btn.innerText = "Copied! ✅";
+        setTimeout(() => { btn.innerText = "Copy Roast for TikTok/IG"; }, 2500);
+    });
+}
+</script>
 </body>
 </html>
